@@ -1,5 +1,6 @@
 const { ipcRenderer } = require('electron');
 const { shell } = require('electron');
+const isDev = require('electron-is-dev');
 
 const _app = new Vue({
     el: '#app',
@@ -34,8 +35,8 @@ const _app = new Vue({
             playlistUri:'',
             addTaskMessage:'',
             navigatorInput:'',
-            //navigatorUrl:'about:blank',
-            navigatorUrl:'https://haokan.baidu.com/?sfrom=baidu-top',
+            navigatorUrl:'about:blank',
+            // navigatorUrl:'https://haokan.baidu.com/?sfrom=baidu-top',
             currentUserAgent:"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36",
             browserVideoUrls:[],
             platform:''
@@ -131,7 +132,7 @@ const _app = new Vue({
             browser.addEventListener('will-navigate',navigateEvent);
             browser.addEventListener('did-navigate',navigateEvent);
             browser.addEventListener('dom-ready',()=>{
-                browser.openDevTools();
+                isDev &&browser.openDevTools();
             });
         },
         message:function(_,{ version, downloadSpeed, 

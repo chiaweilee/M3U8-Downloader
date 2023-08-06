@@ -51,7 +51,7 @@ contextMenu({
 });
 
 const formatFilename = (url) => {
-    var m3u8_filename_matcher = /([^/]+.m3u8)[\?|$]/.exec(url);
+    var m3u8_filename_matcher = /([^/]+).m3u8[\?|$]/.exec(url);
     if (m3u8_filename_matcher && m3u8_filename_matcher[1]) {
         return m3u8_filename_matcher[1];
     }
