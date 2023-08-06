@@ -152,6 +152,23 @@ const _app = new Vue({
             !/^http[s]\:\/\//.test(this.navigatorInput) && (this.navigatorInput = 'http://' + this.navigatorInput);
             this.navigatorUrl != this.navigatorInput && (this.navigatorUrl = this.navigatorInput);
         },
+        navigateBy: function(val) {
+            let browser = document.querySelector('#browser')
+            switch (val) {
+                case -1:
+                    if(browser.canGoBack())browser.goBack();
+                    break;
+                case 0:
+                    browser.reload();
+                    break;
+                case 1:
+                    if(browser.canGoForward())browser.goForward();
+                    break;
+                default:
+                    break;
+            }
+
+        },
         clickAClick: function(e){
             e.preventDefault();
             console.log(e.target.href);
@@ -163,10 +180,13 @@ const _app = new Vue({
         clickClose:function(e){
             ipcRenderer.send('hide-windows');
         },
+        clickGotoSettingTab:function(e){
+            this.tabPane = "setting";
+        },
         clickNewTask:function(e){
             if(!this.config_save_dir)
             {
-                this.tabPane = "setting";
+                this.clickGotoSettingTab();
                 this.$message({title: '提示',type: 'error',message: "请先设置存储路径，再开始下载视频",offset:100,duration:1000});
                 return;
             }
@@ -214,7 +234,7 @@ const _app = new Vue({
         clickNewTaskMuti:function(e){
             if(!this.config_save_dir)
             {
-                this.tabPane = "setting";
+                this.clickGotoSettingTab();
                 this.$message({title: '提示',type: 'error',message: "请先设置存储路径，再开始下载视频",offset:100,duration:1000});
                 return;
             }
@@ -294,7 +314,7 @@ const _app = new Vue({
             this.tsMergeStatus = '';
             if(!this.config_save_dir)
             {
-                this.tabPane = "setting";
+                this.clickGotoSettingTab();
                 this.$message({title: '提示',type: 'error',message: "请先设置存储路径，再开始下载视频",offset:100,duration:1000});
                 return;
             }
